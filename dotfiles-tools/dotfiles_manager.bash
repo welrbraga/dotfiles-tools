@@ -5,28 +5,28 @@ echo "# Carregando funções de controle de dotfiles"
 alias dotfile='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 #Registra a mudança em um arquivo dotfile
-dot_track() {
+dot-track() {
     dotfile add "$1"
     dotfile commit -m "$2"
 }
 
 #Lista os arquivos modificados no ultimo commit
-dot_lastchange() {
+dot-lastchange() {
     dotfile show --name-status --pretty=""
 }
 
 #Submete as mudanças ao repositório
-dot_push() {
+dot-push() {
     dotfile push
 }
 
 #Obtem mas atualizações do repositório
-dot_pull() {
+dot-pull() {
     dotfile pull
 }
 
 #Edita um arquivo e já submete a mudança
-dot_edit() {
+dot-edit() {
     ALT="0"
     TEMPFILE=`tempfile`
     ARQ=$1
@@ -39,76 +39,75 @@ dot_edit() {
 	echo "Informe a razão do commit"
 	read -p "MSG> " MSG
 	[ "$MSG" == "" ] && MSG="Submissao em `date`"
-	dot_track "$ARQ" "$MSG"
+	dot-track "$ARQ" "$MSG"
     fi
     return $ALT
 }
 
 #Simplifica a visualização de logs
-dot_log() {
+dot-log() {
     dotfile log
 }
 
 #Editor para arquivo de aliases
-dot_alias() {
-    dot_edit ~/.bash_aliases || source ~/.bash_aliases
+dot-alias() {
+    dot-edit ~/.bash_aliases || source ~/.bash_aliases
 }
 
 
 #Editor para arquivo de funções
-dot_functions() {
-    dot_edit ~/.bash_functions || source ~/.bash_functions
+dot-functions() {
+    dot-edit ~/.bash_functions || source ~/.bash_functions
 }
 
 #Carrega as modificações nos principais arquivos de funções
-dot_reload() {
+dot-reload() {
     source ~/.bash_aliases
     source ~/.bash_functions
     source ~/dotfiles-tools/dotfiles_manager.bash
 }
 
 #Editor para arquivo de gerencia de dotfiles
-dot_dot() {
-    dot_edit ~/dotfiles-tools/dotfiles_manager.bash || source ~/dotfiles-tools/dotfiles_manager.bash
+dot-dot() {
+    dot-edit ~/dotfiles-tools/dotfiles_manager.bash || source ~/dotfiles-tools/dotfiles_manager.bash
 }
 
 #Lista todos os arquivos sobre a gerencia do dotfile-manager
-dot_ls() {
+dot-ls() {
     dotfile ls-files -v
 }
 
 #Desfaz um git add ou git rm
-dot_unstage() {
+dot-unstage() {
     dotfile reset HEAD -- $1
 }
 
 #Desfaz alteracoes ainda nao comitadas
-dot_undo() {
+dot-undo() {
     dotfile checkout -- $1
 }
 
 #Desfaz apenas o ultimo commit
-dot_rowback() {
+dot-rowback() {
     dotfile revert HEAD
 }
 
 #Exibe o status do repositorio
-dot_status() {
+dot-status() {
     dotfile status
 }
 
 #Executa um diff
-dot_diff() {
+dot-diff() {
     dotfile diff $1
 }
 
 #Autopull pode ser executada no login para carregar as novas ferramentas
-dot_autopull() {
-    ping -c 1 git.github.com >/dev/null 2>&1 && dot_pull
+dot-autopull() {
+    ping -c 1 git.github.com >/dev/null 2>&1 && dot-pull
 }
 
 #Autopush pode ser executado no logout para enviar as modificações para o server
-dot_autopush() {
-    ping -c 1 git.github.com >/dev/null 2>&1 && dot_push
+dot-autopush() {
+    ping -c 1 git.github.com >/dev/null 2>&1 && dot-push
 }
-
