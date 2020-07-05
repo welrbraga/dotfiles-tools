@@ -1,0 +1,20 @@
+#Este script é o gancho post-commit e por ser executado de dentro do GITDIR
+#pode ser invocado como git, e não como dotfile
+
+echo
+echo "Arquivos modificados"
+git show --pretty="" --name-status|awk '$1 ~ /M/ { print $2 }'
+
+echo
+echo "Arquivos adicionados"
+git show --pretty="" --name-status|awk '$1 ~ /A/ { print $2 }'
+
+echo
+echo "Arquivos removidos"
+git show --pretty="" --name-status|awk '$1 ~ /D/ { print $2 }'
+
+echo
+echo "Arquivos em outras situações"
+git show --pretty="" --name-status|awk '$1 !~ /M|A|D/ { print $2 }'
+
+echo
