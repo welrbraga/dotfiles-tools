@@ -1,21 +1,18 @@
+#Installer of dotfile manager
 
 #Ref. https://www.atlassian.com/git/tutorials/dotfiles
 
-#Nao executar
-#Carregar com source
+#This file won't be executed in a terminal
+#Load this with source command
 
-#MAILADDRESS="welrbraga@yahoo.com"
-#FULLNAME="Welington R Braga"
-#GITHUB_LOGIN="welrbraga"
-#GITHUB_REPO="dotfiles"
 
 source $HOME/dotfiles-tools/dotfiles.conf
 
 alias dotfile='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 dot_install() {
-    #Antes de usar esta função você já deve ter um repositório vazio
-    #Criado no Github para que os seus novos commits sejam enviados
+    #Before use this, certify yourself of you have a private repo in Github
+    #to keep your dotfiles safe.
 
     #Cria o repo local
     git init --bare $HOME/.dotfiles
