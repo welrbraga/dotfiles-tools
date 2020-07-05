@@ -54,15 +54,15 @@ repositório seja realmente privado e você tenha consciência dos riscos disto.
 1 - Clone este repositório em algum lugar temporário na sua máquina
 
     cd /tmp
-    git clone https://github.com/welrbraga/dotfiles.git
-    cd dotfiles  
+    git clone https://github.com/welrbraga/dotfiles-tools.git
+    cd dotfiles-tools
 
 2 - Se você deseja usar seus próprios dotfiles (ignorando os meus),
 você deve copiar somente a pasta dotfiles para dentro do seu home
 
     cp -r dotfiles-tools $HOME
 
-3 - Edite o arquivo dotfiles/dotfiles.conf e altere os valores das
+3 - Edite o arquivo dotfiles-tools/dotfiles.conf e altere os valores das
 variáveis que façam menção ao seu repositório de dotfiles.
 
 4 - Carregue o arquivo de instalação em seu ambiente atual (você não deve executá-lo).
@@ -72,10 +72,11 @@ Observe que você não deve executá-lo, mas carrega-lo com o comando source.
 
 5 - Execute a função de instalação:
 
-    dotfiles_install
+    dotfiles-install
 
-5.1 As funções passam a ser válidas a partir da sua próxima sessão de terminal, ou
+6 - As funções passam a ser válidas a partir da sua próxima sessão de terminal, ou
 se você usar o comando reload
 
-    dot_reload
+    dot-reload
+
 
