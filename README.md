@@ -38,7 +38,7 @@ Em um futuro não muito distante eu prometo arrumar isso. ;-)
 
 ## Aviso 1: Um repositório várias máquinas
 
-Você pode criar um único repostório de onde irá clonar em todas as suas estações 
+Você pode criar um único repositório de onde irá clonar em todas as suas estações 
 e servidores, de forma a compartilhar seus arquivos em todos os seus ambientes 
 de trabalho, no entanto eu ainda não implementei nenhum recurso para gerencia de 
 arquivos que precisem ser personalizado por máquina.
@@ -57,22 +57,29 @@ repositório seja realmente privado e você tenha consciência dos riscos disto.
     git clone https://github.com/welrbraga/dotfiles-tools.git
     cd dotfiles-tools
 
-2 - Se você deseja usar seus próprios dotfiles (ignorando os meus),
-você deve copiar somente a pasta dotfiles para dentro do seu home
+2 - Copie somente a pasta dotfiles para dentro do seu home
 
     cp -r dotfiles-tools $HOME
 
 3 - Edite o arquivo dotfiles-tools/dotfiles.conf e altere os valores das
 variáveis que façam menção ao seu repositório de dotfiles.
 
+    vim dotfiles-tools/dotfiles.conf
+
 4 - Carregue o arquivo de instalação em seu ambiente atual (você não deve executá-lo).
 Observe que você não deve executá-lo, mas carrega-lo com o comando source.
 
     source dotfiles-tools/dotfiles_install.bash
 
-5 - Execute a função de instalação:
+5 - Caso você não tenh a seu repositório de dotfiles ainda (é a primeira máquina que
+vocÊ está instalando), então execute a função de instalação:
 
-    dotfiles-install
+    dot-install
+
+5.1 Caso já tenha a função instalada e outras máquinas e está fazendo a replicação
+da configuração em uma nova máquina então execute a função de replicação:
+
+    dot-replicate
 
 6 - As funções passam a ser válidas a partir da sua próxima sessão de terminal, ou
 se você usar o comando reload
