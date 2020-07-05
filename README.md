@@ -87,3 +87,22 @@ se você usar o comando reload
     dot-reload
 
 
+7 - Liste a situação atual do seu repositório de dotfiles
+
+    dot-status
+
+7.1 Para usar a versão dos arquivos no repositório use o comando dot-undo. Por exemplo
+para usar a versão do arquivo .bash_logout que está no repostório:
+
+    dot-undo .bash_logout
+
+7.2 Para preservar e usar a versão que está nesta máquina, use o comando dot-track.
+
+Os arquivos preservados, são diferentes do repositório por isso eles são exibidos como
+"modified" na saída do dot-status. Você deve atualizar o repositório com a nova versão
+do arquivo usando uso do dot-track.
+
+Por exemplo para manter o arquivo .vimrc desta máquina:
+
+    dot-track .vimrc "Versão do vimrc instalada no notebook"
+
