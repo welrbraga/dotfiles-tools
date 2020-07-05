@@ -49,22 +49,29 @@ dot_install() {
 dot_replicate() {
 
     #Clone do repo no local
-    git clone --bare git@github.com:${GITHUB_LOGIN}/${GITHUB_REPO}.git $HOME/.dotfiles
+    git clone --bare git@github.com:${GITHUB_LOGIN}/${GITHUB_REPO}.git "$HOME/.dotfiles"
 
+    if [ ! $? ]; then
+        echo "Não foi possível clonar seu repositório de dotfiles"
+        return
+    fi
+
+    cd "$HOME/.dotfiles"
     #Personaliza o repositório
     echo "Dotfiles de $FULLNAME">$HOME/.dotfiles/description
     dotfile config --local status.showUntrackedFiles no
     dotfile config --local user.email "$MAILADDRESS"
     dotfile config --local user.name "$FULLNAME"
     dotfile config --local core.hooksPath $HOME/dotfiles-tools/hooks
+    cd "$HOME"
 
     #Pega do repositorio somente os arquivos de gerencia
-    dotfile reset HEAD
-    dotfile checkout -- dotfiles/**
+    #dotfile reset HEAD
+    #dotfile checkout -- dotfiles/**
     dotfile push --set-upstream origin master
 
     #Cria um link simbólico para o arquivo com funções de gerencia de dotfiles
-    ln -fs "$PWD/dotfiles_manager.bash" "$HOME/.dotfiles_manager.bash"
+    ln -fs "$PWD/dotfiles-tools/dotfiles_manager.bash" "$HOME/.dotfiles_manager.bash"
 
     #Configura a inicialização automatica da gerencia dos dotfiles
     echo "source $HOME/.dotfiles_manager.bash" >> $HOME/.bashrc
