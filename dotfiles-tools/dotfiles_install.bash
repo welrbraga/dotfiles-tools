@@ -66,7 +66,7 @@ dot_replicate() {
     cd "$HOME"
 
     #Pega do repositorio somente os arquivos de gerencia
-    #dotfile reset HEAD
+    dotfile reset HEAD
     #dotfile checkout -- dotfiles/**
     dotfile push --set-upstream origin master
 
