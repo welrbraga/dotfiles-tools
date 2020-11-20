@@ -74,9 +74,14 @@ dot-functions() {
 
 #Carrega as modificações nos principais arquivos de funções
 dot-reload() {
-    source ~/.bash_aliases
-    source ~/.bash_functions
     source ~/dotfiles-tools/dotfiles_manager.bash
+    if [ -f ~/.bash_aliases ]; then
+        . ~/.bash_aliases
+    fi
+
+    if [ -f ~/.bash_functions ]; then
+        . ~/.bash_functions
+    fi
 }
 
 #Editor para arquivo de gerencia de dotfiles
