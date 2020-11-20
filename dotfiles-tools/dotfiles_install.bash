@@ -34,6 +34,21 @@ dot_custom_repo() {
 	cd "$HOME"
 }
 
+dot_custom_bashrc() {
+    #Configure dotfiles_manager autoload on .bashrc file
+
+    cat <<EOF >>$HOME/.bashrc
+
+source $HOME/dotfiles-tools/dotfiles_manager.bash
+
+echo "Recebendo atualizações dos dotfiles, se possível"
+dot-autopull
+dot-reload .bashrc
+
+EOF
+
+}
+
 dot_install() {
     #Before use this, certify yourself of you have a private repo in Github
     #to keep your dotfiles safe.
@@ -58,8 +73,7 @@ dot_install() {
     dotfile push --mirror git@github.com:${GITHUB_LOGIN}/${GITHUB_REPO}.git
     dotfile push --set-upstream origin master
 
-		#Configura a inicialização automatica da gerencia dos dotfiles
-    echo "source $HOME/dotfiles-tools/dotfiles_manager.bash" >> $HOME/.bashrc
+    dot_custom_bashrc
 
     #Carrega as funções de gerência
     source $HOME/dotfiles-tools/dotfiles_manager.bash
@@ -82,8 +96,7 @@ dot_replicate() {
     #dotfile checkout -- dotfiles/**
     dotfile push --set-upstream origin master
 
-    #Configura a inicialização automatica da gerencia dos dotfiles
-    echo "source $HOME/dotfiles-tools/dotfiles_manager.bash" >> $HOME/.bashrc
+    dot_custom_bashrc
 
     #Carrega as funções de gerência
     source $HOME/dotfiles-tools/dotfiles_manager.bash
