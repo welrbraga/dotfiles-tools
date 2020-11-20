@@ -88,7 +88,7 @@ dot-undo() {
 }
 
 #Desfaz apenas o ultimo commit
-dot-rowback() {
+dot-uncommit() {
     dotfile revert HEAD
 }
 
