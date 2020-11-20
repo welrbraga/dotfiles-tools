@@ -74,7 +74,7 @@ dot-functions() {
 
 #Carrega as modificações nos principais arquivos de funções
 dot-reload() {
-    source ~/dotfiles-tools/dotfiles_manager.bash
+    [ "$1" == ".bashrc" ] || source ~/dotfiles-tools/dotfiles_manager.bash
     if [ -f ~/.bash_aliases ]; then
         . ~/.bash_aliases
     fi
