@@ -5,6 +5,17 @@
 #This file won't be executed in a terminal
 #Load this with source command
 
+####################################################################################
+#
+# *** NÃO ALTERE ESTE ARQUIVO ***
+#
+# Alterar este arquivo no seu repositório poderá deixá-lo incoerente com a versão
+# oficial disponivel em https://github.com/welrbraga/dotfiles-tools
+#
+# As suas alterações poderão ser perdidas quando você desejar fazer uma nova
+# instalação ou atualizar a partir do repositório oficial
+#
+#####################################################################################
 
 source $HOME/dotfiles-tools/dotfiles.conf
 

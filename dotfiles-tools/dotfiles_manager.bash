@@ -1,5 +1,17 @@
 #Funções para gerencia dos dotfiles
 
+####################################################################################
+#
+# *** NÃO ALTERE ESTE ARQUIVO ***
+#
+# Alterar este arquivo no seu repositório poderá deixá-lo incoerente com a versão
+# oficial disponivel em https://github.com/welrbraga/dotfiles-tools
+#
+# As suas alterações poderão ser perdidas quando você desejar fazer uma nova
+# instalação ou atualizar a partir do repositório oficial
+#
+#####################################################################################
+
 echo "# Carregando funções de controle de dotfiles"
 
 alias dotfile='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
