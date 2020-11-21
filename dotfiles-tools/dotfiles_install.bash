@@ -18,11 +18,28 @@
 #####################################################################################
 
 
+#Realiza a primeira configuração interativa do sistema
+dot_first_setup() {
+  read -p "Your name: " FULLNAME
+  read -p "Your e-mail: " MAILADDRESS
+  read -p "Github Login: " GITHUB_LOGIN
+  read -p "Github Repo: " GITHUB_REPO
+
+  sed -e "s|^FULLNAME=.*|FULLNAME=\"${FULLNAME}\"|" \
+      -e "s|^MAILADDRESS=.*|MAILADDRESS=\"${MAILADDRESS}\"|" \
+      -e "s|^GITHUB_LOGIN=.*|GITHUB_LOGIN=\"${GITHUB_LOGIN}\"|" \
+      -e "s|^GITHUB_REPO=.*|GITHUB_REPO=\"${GITHUB_REPO}\"|" \
+      -i "${CONFFILE}"
+}
+
 CONFFILE="$HOME/.dotfiles.conf"
 
 if [ ! -f "${CONFFILE}" ]; then
-	echo "# Criando arquivo de configuração a ser personalizado"
-	cp "$HOME/dotfiles-tools/dotfiles.template.conf" "${CONFFILE}"
+  echo "# Criando arquivo de configuração a ser personalizado"
+  cp "$HOME/dotfiles-tools/dotfiles.template.conf" "${CONFFILE}"
+
+  dot_first_setup
+
 fi
 
 #Carrega o arquivo com as configurações do repositório  do usuário
@@ -32,16 +49,16 @@ source "${CONFFILE}"
 source $HOME/dotfiles-tools/dotfiles_manager.bash
 
 dot_custom_repo() {
-	# Customize your repo info with dotfiles.conf values
+  # Customize your repo info with dotfiles.conf values
 
-	cd "$HOME/.dotfiles"
-	#Personaliza o repositório
-	echo "Dotfiles de $FULLNAME">$HOME/.dotfiles/description
-	dotfile config --local status.showUntrackedFiles no
-	dotfile config --local user.email "$MAILADDRESS"
-	dotfile config --local user.name "$FULLNAME"
-	dotfile config --local core.hooksPath $HOME/dotfiles-tools/hooks
-	cd "$HOME"
+  cd "$HOME/.dotfiles"
+  #Personaliza o repositório
+  echo "Dotfiles de $FULLNAME">$HOME/.dotfiles/description
+  dotfile config --local status.showUntrackedFiles no
+  dotfile config --local user.email "$MAILADDRESS"
+  dotfile config --local user.name "$FULLNAME"
+  dotfile config --local core.hooksPath $HOME/dotfiles-tools/hooks
+  cd "$HOME"
 }
 
 dot_custom_bashrc() {
