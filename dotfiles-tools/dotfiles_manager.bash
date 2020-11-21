@@ -24,6 +24,11 @@ dot-track() {
     dotfile commit -m "$2"
 }
 
+#Deixa de registrar as mudanças em um arquivo dotfile
+dot-untrack() {
+    dotfile rm --cached "$1"
+}
+
 #Lista os arquivos modificados no ultimo commit
 dot-lastchange() {
     dotfile show --name-status --pretty=""
