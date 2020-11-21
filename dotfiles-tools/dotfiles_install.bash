@@ -18,8 +18,15 @@
 #####################################################################################
 
 
+CONFFILE="$HOME/.dotfiles.conf"
+
+if [ ! -f "${CONFFILE}" ]; then
+	echo "# Criando arquivo de configuração a ser personalizado"
+	cp "$HOME/dotfiles-tools/dotfiles.template.conf" "${CONFFILE}"
+fi
+
 #Carrega o arquivo com as configurações do repositório  do usuário
-source $HOME/dotfiles-tools/dotfiles.conf
+source "${CONFFILE}"
 
 #Carrega as funções de gerência
 source $HOME/dotfiles-tools/dotfiles_manager.bash
@@ -72,8 +79,8 @@ dot_install() {
 
     #Configura o repositório remoto e realiza o primeiro push
     cd $HOME/.dotfiles
-    dotfile remote add origin git@github.com:${GITHUB_LOGIN}/${GITHUB_REPO}.git
-    dotfile push --mirror git@github.com:${GITHUB_LOGIN}/${GITHUB_REPO}.git
+    dotfile remote add origin "${DOTFILE_GITREMOTE}"
+    dotfile push --mirror "${DOTFILE_GITREMOTE}"
     dotfile push --set-upstream origin master
 
     dot_custom_bashrc
@@ -84,7 +91,7 @@ dot_install() {
 dot_replicate() {
 
     #Clone do repo no local
-    git clone --bare git@github.com:${GITHUB_LOGIN}/${GITHUB_REPO}.git "$HOME/.dotfiles"
+    git clone --bare "${DOTFILE_GITREMOTE}" "$HOME/.dotfiles"
     if [ ! $? ]; then
         echo "Não foi possível clonar seu repositório de dotfiles"
         return
