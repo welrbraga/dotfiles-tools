@@ -12,7 +12,7 @@
 #
 #####################################################################################
 
-echo "# Carregando funções de controle de dotfiles"
+echo "# Carregando funções de controle de dotfiles para $USER"
 
 dotfile() {
     /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME "$@"
