@@ -60,6 +60,9 @@ dot_install() {
         return
     fi
 
+    #Carrega as funções de gerência
+    source $HOME/dotfiles-tools/dotfiles_manager.bash
+
     dot_custom_repo
 
     #Realiza um commit inicial para permitir o push para o servidor remoto
@@ -75,8 +78,6 @@ dot_install() {
 
     dot_custom_bashrc
 
-    #Carrega as funções de gerência
-    source $HOME/dotfiles-tools/dotfiles_manager.bash
 }
 
 
@@ -89,6 +90,9 @@ dot_replicate() {
         return
     fi
 
+    #Carrega as funções de gerência
+    source $HOME/dotfiles-tools/dotfiles_manager.bash
+
     dot_custom_repo
 
     #Pega do repositorio somente os arquivos de gerencia
@@ -97,7 +101,4 @@ dot_replicate() {
     dotfile push --set-upstream origin master
 
     dot_custom_bashrc
-
-    #Carrega as funções de gerência
-    source $HOME/dotfiles-tools/dotfiles_manager.bash
 }
