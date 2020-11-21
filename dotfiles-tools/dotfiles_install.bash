@@ -17,9 +17,12 @@
 #
 #####################################################################################
 
+
+#Carrega o arquivo com as configurações do repositório  do usuário
 source $HOME/dotfiles-tools/dotfiles.conf
 
-alias dotfile='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+#Carrega as funções de gerência
+source $HOME/dotfiles-tools/dotfiles_manager.bash
 
 dot_custom_repo() {
 	# Customize your repo info with dotfiles.conf values
@@ -60,9 +63,6 @@ dot_install() {
         return
     fi
 
-    #Carrega as funções de gerência
-    source $HOME/dotfiles-tools/dotfiles_manager.bash
-
     dot_custom_repo
 
     #Realiza um commit inicial para permitir o push para o servidor remoto
@@ -89,9 +89,6 @@ dot_replicate() {
         echo "Não foi possível clonar seu repositório de dotfiles"
         return
     fi
-
-    #Carrega as funções de gerência
-    source $HOME/dotfiles-tools/dotfiles_manager.bash
 
     dot_custom_repo
 
