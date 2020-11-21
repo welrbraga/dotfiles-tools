@@ -24,15 +24,13 @@ dezenas ou centenas de servidores e sentiu a falta daquele seu script especial q
 resolve o problema com um comando pequeno mas que foi criado no desktop, então
 este tipo de ferramenta (gerenciador de dotfiles) é importante para você.
 
-
 ## Pré-requisitos
 
-Você deverá criar um repositório vazio no Github que será onde você manterá
-sua coleção de dotfiles, é de lá que replicaremos os nossos dotfiles para todas
-as nossas máquinas.
+Você deverá criar um repositório PRIVADO e vazio no Github que será onde você manterá sua coleção de dotfiles. É de lá que replicaremos os nossos dotfiles para todas as nossas máquinas.
 
-No momento a obrigatoriedade do Github está "hardcoded" então se vc não gostar
-disso terá que editar o sistema para definir o seu próprio serviço de repositórios git (no momento, linhas 75,76 e 87 do arquivo dotfiles_install.bash).
+Este repositório deverá possuir uma chave de deploy (ssh-rsa ou outra) com permissão de escrita, para podermos mante-lo atualizado.
+
+Caso não queira usar o Github em favor de outro sistema remoto você pode editá-lo no arquivo ".dotfiles.conf"
 
 Em um futuro não muito distante eu prometo arrumar isso. ;-)
 
@@ -50,6 +48,13 @@ chaves ssh, senhas etc, portanto não versione estes arquivos a menos que seu
 repositório seja realmente privado e você tenha consciência dos riscos disto.
 
 ## Instalação
+
+AVISO: Ainda estou trabalhando no processo de instalação e replicação, então as instruções abaixo podem estar defasadas, mas em regras gerais o que você deve fazer é:
+(1) Copiar a pasta dotfiles-tools para seu home, como está;
+(2) Executar source ~/dotfiles-tools/dotfiles_install.bash
+(3) Executar dot_install (caso você ñão tenha um repositório de dotfiles) ou
+    Executar dot_replicate (caso já tenha um repositório)
+
 
 1 - Clone este repositório em algum lugar temporário na sua máquina
 
