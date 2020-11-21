@@ -14,7 +14,9 @@
 
 echo "# Carregando funções de controle de dotfiles"
 
-alias dotfile='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+dotfile() {
+    /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME "$@"
+}
 
 #Registra a mudança em um arquivo dotfile
 dot-track() {
@@ -47,11 +49,11 @@ dot-edit() {
     editor "$ARQ" ;                        #Edita o arquivo
     md5sum -c "$TEMPFILE" >/dev/null 2>&1 || ALT="1"
     if [ "$ALT" == "1" ]; then
-	MSG=""
-	echo "Informe a razão do commit"
-	read -p "MSG> " MSG
-	[ "$MSG" == "" ] && MSG="Submissao em `date`"
-	dot-track "$ARQ" "$MSG"
+      MSG=""
+      echo "Informe a razão do commit"
+      read -p "MSG> " MSG
+      [ "$MSG" == "" ] && MSG="Submissao em `date`"
+      dot-track "$ARQ" "$MSG"
     fi
     return $ALT
 }
@@ -121,10 +123,10 @@ dot-diff() {
 
 #Autopull pode ser executada no login para carregar as novas ferramentas
 dot-autopull() {
-    ping -c 1 git.github.com >/dev/null 2>&1 && dot-pull
+    ping -c 1 github.com >/dev/null 2>&1 && dot-pull
 }
 
 #Autopush pode ser executado no logout para enviar as modificações para o server
 dot-autopush() {
-    ping -c 1 git.github.com >/dev/null 2>&1 && dot-push
+    ping -c 1 github.com >/dev/null 2>&1 && dot-push
 }
