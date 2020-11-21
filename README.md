@@ -98,3 +98,8 @@ Os arquivos preservados, são diferentes do repositório por isso eles são exib
 Por exemplo para manter o arquivo .vimrc desta máquina:
 
     dot-track .vimrc "Versão do vimrc instalada no notebook"
+
+
+## Teste em conatiner
+
+docker build --tag dotfiles . && docker run -ti --rm dotfiles /bin/bash ./teste-install.sh
