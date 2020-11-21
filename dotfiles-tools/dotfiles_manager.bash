@@ -14,8 +14,20 @@
 
 echo "# Carregando funções de controle de dotfiles para $USER"
 
+OFFICIALREPO="https://github.com/welrbraga/dotfiles-tools"
+
+dot_update() {
+  echo "Atualizando funções do dotfiles-tools"
+  cd /tmp
+  tmpzip="`tempfile`.zip"
+  curl --location "${OFFICIALREPO}/archive/master.zip" --output "${tmpzip}"
+  unzip "${tmpzip}"
+  cp -r /tmp/dotfiles-tools-master/dotfiles-tools "$HOME/"
+  rm -rf /tmp/dotfiles-tools-master
+}
+
 dotfile() {
-    /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME "$@"
+  /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME "$@"
 }
 
 #Registra a mudança em um arquivo dotfile
