@@ -2,9 +2,8 @@ FROM debian
 
 RUN apt-get update && apt-get install git -y
 
+COPY home-teste /root
 COPY dotfiles-tools /root/dotfiles-tools
-COPY teste.dotfiles.conf /root/.dotfiles.conf
 
 WORKDIR /root
-COPY teste-install.sh .
-RUN chmod +x teste-install.sh
+RUN chmod 700 .ssh && chmod 600 .ssh/* && chmod +x teste-install.sh
