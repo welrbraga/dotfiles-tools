@@ -7,7 +7,7 @@ Conjunto de ferramentas essenciais para gerenciar dotfiles.
 dotfiles são todos aqueles arquivos ocultos em sem $HOME e que são usados
 para configurar suas ferramentas de trabalho.
 
-Os arquvios abaixo são exemplos de dotfiles:
+Os arquivos abaixo são exemplos de dotfiles:
 
     .bashrc
     .vimrc
@@ -52,29 +52,41 @@ repositório seja realmente privado e você tenha consciência dos riscos disto.
 Este processo considera que você já tem um repositório de dotfiles configurado
 e você tenha criado um arquivo de configuração .dotfiles.conf (Copie dotfiles.template.conf e altere-o para refletir suas configurações)
 
+```
 curl --silent 'https://raw.githubusercontent.com/welrbraga/dotfiles-tools/master/dot-install.sh'|bash
+```
 
 (1) Após o processo, arquivos dotfiles que não existiam nesta máquina, mas que estão no repositório, serão copiados.
 
 (2) As funções passam a ser válidas a partir da sua próxima sessão de terminal, ou se você recarregar o seu .bashrc
 
-  source .bashrc
+```
+source .bashrc
+```
 
 (3) Liste a situação atual do seu repositório de dotfiles
 
-  dot-status
+```
+dot-status
+```
 
 (4) Caso haja arquivos equivalentes no repositório e em sua máquina, eles serão exibidos como "M" (modified).
 
 Você pode desfazer a modificação local e usar a versão do repositório usando o comando dot-undo. Por exemplo para usar a versão do arquivo .bash_logout que está no repositório:
 
-  dot-undo .bash_logout
+```
+dot-undo .bash_logout
+```
 
 Ou para preservar e usar a versão que está nesta máquina, use o comando dot-track para que o arquivo seja versionado e passe a ser a versão oficial que será replicada em todas as suas outras máquinas. Por exemplo para manter o arquivo .vimrc desta máquina:
 
-  dot-track .vimrc "Versão do vimrc instalada no notebook"
+```
+dot-track .vimrc "Versão do vimrc instalada no notebook"
+```
 
 
 ## Teste em container
 
+```
 docker build --tag dotfiles . && docker run -ti --rm dotfiles /bin/bash ./teste-install.sh
+```
