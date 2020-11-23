@@ -49,62 +49,32 @@ repositório seja realmente privado e você tenha consciência dos riscos disto.
 
 ## Instalação
 
-AVISO: Ainda estou trabalhando no processo de instalação e replicação, então as instruções abaixo podem estar defasadas, mas em regras gerais o que você deve fazer é:
-(1) Copiar a pasta dotfiles-tools para seu home, como está;
-(2) Executar source ~/dotfiles-tools/dotfiles_install.bash
-(3) Executar dot_install (caso você ñão tenha um repositório de dotfiles) ou
-    Executar dot_replicate (caso já tenha um repositório)
+Este processo considera que você já tem um repositório de dotfiles configurado
+e você tenha criado um arquivo de configuração .dotfiles.conf (Copie dotfiles.template.conf e altere-o para refletir suas configurações)
+
+curl --silent 'https://raw.githubusercontent.com/welrbraga/dotfiles-tools/master/dot-install.sh'|bash
+
+(1) Após o processo, arquivos dotfiles que não existiam nesta máquina, mas que estão no repositório, serão copiados.
+
+(2) As funções passam a ser válidas a partir da sua próxima sessão de terminal, ou se você recarregar o seu .bashrc
+
+  source .bashrc
+
+(3) Liste a situação atual do seu repositório de dotfiles
+
+  dot-status
+
+(4) Caso haja arquivos equivalentes no repositório e em sua máquina, eles serão exibidos como "M" (modified).
+
+Você pode desfazer a modificação local e usar a versão do repositório usando o comando dot-undo. Por exemplo para usar a versão do arquivo .bash_logout que está no repositório:
+
+  dot-undo .bash_logout
+
+Ou para preservar e usar a versão que está nesta máquina, use o comando dot-track para que o arquivo seja versionado e passe a ser a versão oficial que será replicada em todas as suas outras máquinas. Por exemplo para manter o arquivo .vimrc desta máquina:
+
+  dot-track .vimrc "Versão do vimrc instalada no notebook"
 
 
-1 - Clone este repositório em algum lugar temporário na sua máquina
-
-    cd /tmp
-    git clone https://github.com/welrbraga/dotfiles-tools.git
-    cd dotfiles-tools
-
-2 - Copie somente a pasta dotfiles para dentro do seu home
-
-    cp -r dotfiles-tools $HOME
-
-3 - Edite o arquivo dotfiles-tools/dotfiles.conf e altere os valores das
-variáveis que façam menção ao seu repositório de dotfiles.
-
-    vim dotfiles-tools/dotfiles.conf
-
-4 - Carregue o arquivo de instalação em seu ambiente atual (você não deve executá-lo).
-Observe que você não deve executá-lo, mas carrega-lo com o comando source.
-
-    source ~/dotfiles-tools/dotfiles_install.bash
-
-5 - Caso você não tenha seu repositório de dotfiles ainda (é a primeira máquina que você está instalando), então execute a função de instalação:
-
-    dot_install
-
-5.1 Caso já tenha a função instalada e outras máquinas e está fazendo a replicação da configuração em uma nova máquina então execute a função de replicação:
-
-    dot_replicate
-
-6 - As funções passam a ser válidas a partir da sua próxima sessão de terminal, ou se você usar o comando reload
-
-    dot-reload
-
-7 - Liste a situação atual do seu repositório de dotfiles
-
-    dot-status
-
-7.1 Para usar a versão dos arquivos no repositório use o comando dot-undo. Por exemplo para usar a versão do arquivo .bash_logout que está no repositório:
-
-    dot-undo .bash_logout
-
-7.2 Para preservar e usar a versão que está nesta máquina, use o comando dot-track.
-
-Os arquivos preservados, são diferentes do repositório por isso eles são exibidos como "modified" na saída do dot-status. Você deve atualizar o repositório com a nova versão do arquivo usando uso do dot-track.
-
-Por exemplo para manter o arquivo .vimrc desta máquina:
-
-    dot-track .vimrc "Versão do vimrc instalada no notebook"
-
-
-## Teste em conatiner
+## Teste em container
 
 docker build --tag dotfiles . && docker run -ti --rm dotfiles /bin/bash ./teste-install.sh
