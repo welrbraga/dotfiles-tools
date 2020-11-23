@@ -11,6 +11,12 @@ dot_update
 
 source $HOME/dotfiles-tools/dotfiles_install.bash
 
-#Choose one action
-#dot_replicate #Para usar um repositório de dotfiles já preenchido
+#Para usar um repositório de dotfiles já preenchido
+dot_replicate
+
+#Restaura os arquivos marcados como "Deleted" pelo Git
+#com os seus dotfiles acabaram de ser recuperados do repositório,
+#Estes arquivos são na verdade aqueles não existem ainda na sua cópia local
+for file in `dotfile status --short | awk '$1=="D" { print $2 }'`; do dot-undo $file; done
+
 #dot_install #Para usar um repositório de dotfiles VAZIO
