@@ -87,6 +87,8 @@ dot-track .vimrc "Versão do vimrc instalada no notebook"
 
 ## Teste em container
 
+Isso não é necessário para nenhum usuário final. Este é apenas um container de teste com uma distribuição Linux simples usada para testes da ferramenta.
+
 ```
-docker build --tag dotfiles . && docker run -ti --rm dotfiles /bin/bash ./teste-install.sh
+docker build --tag dotfiles . && docker run -ti --rm dotfiles /bin/bash
 ```
