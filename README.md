@@ -34,7 +34,7 @@ este tipo de ferramenta (gerenciador de dotfiles) é importante para você.
 
 (2) Você deverá criar um repositório PRIVADO e vazio no Github que será onde você manterá sua coleção de dotfiles. É de lá que replicaremos os nossos dotfiles para todas as nossas máquinas.
 
-(3) Este repositório deverá possuir uma chave de deploy (ssh-rsa ou outra) com permissão de escrita, para podermos mante-lo atualizado. Você precisará gerar uma chave destas para cada máquian que desejar manter contato com este repositório (recomendável); ou copiar uma única chave privada para todas as máquinas (é melhor ter cuidado com esta abordagem).
+(3) Este repositório deverá possuir uma chave de deploy (ssh-rsa ou outra) com permissão de escrita, para podermos mantê-lo atualizado. Você precisará gerar uma chave destas para cada máquian que desejar manter contato com este repositório (recomendável); ou copiar uma única chave privada para todas as máquinas (é melhor ter cuidado com esta abordagem).
 
 Caso não queira usar o Github em favor de outro sistema remoto você pode editá-lo no arquivo ".dotfiles.conf", porém eu ainda não testei esta possibilidade, se quiser arriscar, por sua conta e risco me dê um retorno sobre os testes.
 
