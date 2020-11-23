@@ -23,7 +23,7 @@ dot_update() {
   tmpzip="`tempfile`.zip" #já inclui o /tmp antes do nome
   curl --silent --location "${OFFICIALREPO}/archive/${BRANCH}.zip" --output "${tmpzip}"
   COMMIT=$(unzip -u "${tmpzip}" | awk '{ nlines++ ; if (nlines==2) {print $0;}; }' )
-  INSTALLED=$(cat $HOME/dotfiles-tools/COMMIT)
+  INSTALLED=$(cat $HOME/dotfiles-tools/COMMIT 2>/dev/null || echo "Unknown")
   echo $COMMIT > /tmp/${REPONAME}-${BRANCH}/dotfiles-tools/COMMIT
   echo "Instalado: $INSTALLED"
   echo "Obtido:    $COMMIT"
