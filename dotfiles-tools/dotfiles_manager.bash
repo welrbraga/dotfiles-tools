@@ -24,6 +24,7 @@ dot_update() {
   unzip "${tmpzip}"
   cp -r /tmp/dotfiles-tools-master/dotfiles-tools "$HOME/"
   rm -rf /tmp/dotfiles-tools-master
+  cd "$OLDPWD"
 }
 
 dotfile() {
