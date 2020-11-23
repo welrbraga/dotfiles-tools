@@ -19,11 +19,17 @@ OFFICIALREPO="https://github.com/welrbraga/dotfiles-tools"
 dot_update() {
   echo "Atualizando funções do dotfiles-tools"
   cd /tmp
-  tmpzip="`tempfile`.zip"
+  tmpzip="`tempfile`.zip" #já inclui o /tmp antes do nome
   curl --location "${OFFICIALREPO}/archive/master.zip" --output "${tmpzip}"
-  unzip "${tmpzip}"
-  cp -r /tmp/dotfiles-tools-master/dotfiles-tools "$HOME/"
-  rm -rf /tmp/dotfiles-tools-master
+  COMMIT=$(unzip -u "${tmpzip}" | awk '{ nlines++ ; if (nlines==2) {print $0;}; }' )
+	echo $COMMIT | tee /tmp/dotfiles-tools-master/COMMIT
+	if [ ! "$COMMIT" == "`cat $HOME/dotfiles-tools/COMMIT`" ]; then
+  	cp -r /tmp/dotfiles-tools-master/dotfiles-tools "$HOME/";
+	else
+    echo "Nada alterado";
+	fi
+	rm -rf /tmp/dotfiles-tools-master
+	rm $tmpzip
   cd "$OLDPWD"
 }
 
