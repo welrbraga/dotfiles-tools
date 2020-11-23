@@ -101,8 +101,6 @@ dot_install() {
     dotfile push --set-upstream origin master
 
     dot_custom_bashrc
-
-    dot_update
 }
 
 
@@ -123,6 +121,4 @@ dot_replicate() {
     dotfile push --set-upstream origin master
 
     dot_custom_bashrc
-
-    dot_update
 }
