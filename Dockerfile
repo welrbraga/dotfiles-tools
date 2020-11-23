@@ -1,6 +1,6 @@
 FROM debian
 
-RUN apt-get update && apt-get install git -y
+RUN apt-get update && apt-get install git curl unzip -y
 
 COPY home-teste /root
 COPY dotfiles-tools /root/dotfiles-tools
