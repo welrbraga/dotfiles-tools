@@ -77,8 +77,8 @@ EOF
 }
 
 dot_install() {
-    #Before use this, certify yourself of you have a private repo in Github
-    #to keep your dotfiles safe.
+    #Before use this, certify yourself of you have a EMPTY private repo
+    #in Github to keep your dotfiles safe.
 
     #Cria o repo local
     git init --bare $HOME/.dotfiles
@@ -102,6 +102,7 @@ dot_install() {
 
     dot_custom_bashrc
 
+    dot_update
 }
 
 
@@ -122,4 +123,6 @@ dot_replicate() {
     dotfile push --set-upstream origin master
 
     dot_custom_bashrc
+
+    dot_update
 }
