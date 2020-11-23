@@ -14,22 +14,26 @@
 
 echo "# Carregando funções de controle de dotfiles para $USER"
 
-OFFICIALREPO="https://github.com/welrbraga/dotfiles-tools"
-
 dot_update() {
-  echo "Atualizando funções do dotfiles-tools"
+  echo "Obtendo atualizações de dotfiles-tools"
+  REPONAME="dotfiles-tools"
+  OFFICIALREPO="https://github.com/welrbraga/${REPONAME}"
+  BRANCH="master"
   cd /tmp
   tmpzip="`tempfile`.zip" #já inclui o /tmp antes do nome
-  curl --location "${OFFICIALREPO}/archive/master.zip" --output "${tmpzip}"
+  curl --silent --location "${OFFICIALREPO}/archive/${BRANCH}.zip" --output "${tmpzip}"
   COMMIT=$(unzip -u "${tmpzip}" | awk '{ nlines++ ; if (nlines==2) {print $0;}; }' )
-	echo $COMMIT | tee /tmp/dotfiles-tools-master/COMMIT
-	if [ ! "$COMMIT" == "`cat $HOME/dotfiles-tools/COMMIT`" ]; then
-  	cp -r /tmp/dotfiles-tools-master/dotfiles-tools "$HOME/";
-	else
+  INSTALLED=$(cat $HOME/dotfiles-tools/COMMIT)
+  echo $COMMIT > /tmp/${REPONAME}-${BRANCH}/dotfiles-tools/COMMIT
+  echo "Instalado: $INSTALLED"
+  echo "Obtido:    $COMMIT"
+  if [ ! "$COMMIT" == "$INSTALLED" ]; then
+    echo "Atualizando";
+    cp -r /tmp/${REPONAME}-${BRANCH}/dotfiles-tools "$HOME/";
+  else
     echo "Nada alterado";
-	fi
-	rm -rf /tmp/dotfiles-tools-master
-	rm $tmpzip
+  fi
+  rm -rf /tmp/${REPONAME}-${BRANCH} $tmpzip
   cd "$OLDPWD"
 }
 
