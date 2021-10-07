@@ -2,20 +2,21 @@
 
 Conjunto de ferramentas essenciais para gerenciar dotfiles.
 
-# O que são dotfiles
+## O que são dotfiles
 
-dotfiles são todos aqueles arquivos ocultos em sem $HOME e que são usados
+dotfiles são todos aqueles arquivos ocultos em seu $HOME e que são usados
 para configurar suas ferramentas de trabalho.
 
 Os arquivos abaixo são exemplos de dotfiles:
 
     .bashrc
+    .profiles
     .vimrc
     .gitconfig
 
 Sem uma ferramenta de gerência você terá arquivos independentes em todas as
 máquinas e terá que gerência-los individualmente. Para maioria das pessoas isso
-pode ser desejável, ou não fazer diferença mas para um nicho de pessoas este
+pode ser desejável ou não fazer diferença, mas para um nicho de pessoas este
 controle é importante.
 
 Se em algum momento no seu trabalho com o desktop, por exemplo, você sentiu falta
@@ -26,7 +27,7 @@ este tipo de ferramenta (gerenciador de dotfiles) é importante para você.
 
 ## Pré-requisitos
 
-(1) As máquinas onde esta ferramenta será usada precisa ter instalado as seguintes ferramentas acessíveis por linah de comandos:
+(1) As máquinas onde esta ferramenta será usada precisa ter instalado as seguintes ferramentas acessíveis por linha de comandos:
 
 * Git
 * Curl
@@ -34,7 +35,7 @@ este tipo de ferramenta (gerenciador de dotfiles) é importante para você.
 
 (2) Você deverá criar um repositório PRIVADO e vazio no Github que será onde você manterá sua coleção de dotfiles. É de lá que replicaremos os nossos dotfiles para todas as nossas máquinas.
 
-(3) Este repositório deverá possuir uma chave de deploy (ssh-rsa ou outra) com permissão de escrita, para podermos mantê-lo atualizado. Você precisará gerar uma chave destas para cada máquian que desejar manter contato com este repositório (recomendável); ou copiar uma única chave privada para todas as máquinas (é melhor ter cuidado com esta abordagem).
+(3) Este repositório deverá possuir uma chave de deploy (ssh-rsa ou outra) com permissão de escrita, para podermos mantê-lo atualizado. Você precisará gerar uma chave destas para cada máquina que desejar manter contato com este repositório (recomendável); ou copiar uma única chave privada para todas as máquinas (é melhor ter cuidado com esta abordagem).
 
 Caso não queira usar o Github em favor de outro sistema remoto você pode editá-lo no arquivo ".dotfiles.conf", porém eu ainda não testei esta possibilidade, se quiser arriscar, por sua conta e risco me dê um retorno sobre os testes.
 
@@ -44,6 +45,18 @@ Você pode criar um único repositório de onde irá clonar em todas as suas est
 e servidores, de forma a compartilhar seus arquivos em todos os seus ambientes
 de trabalho, no entanto eu ainda não implementei nenhum recurso para gerencia de
 arquivos que precisem ser personalizado por máquina.
+
+Como todos os arquivos não passa de lotes de comando shell, uma possibilidade é usar
+comandos especificos em estruturas "if/then/fi. Como no exemplo abaixo em que um novo
+diretório será adicionado ao PATH apenas na máquina "myserver".
+
+    ```bash
+
+    if [ "$HOSTNAME" == "myserver" ]; then
+        PATH=$PATH:/opt/adminscripts
+    fi
+
+    ```
 
 ## Aviso 2: Arquivos com senhas
 
@@ -56,43 +69,54 @@ repositório seja realmente privado e você tenha consciência dos riscos disto.
 Este processo considera que você já tem um repositório de dotfiles configurado
 e você tenha criado um arquivo de configuração .dotfiles.conf (Copie dotfiles.template.conf e altere-o para refletir suas configurações)
 
-```
-curl --silent 'https://raw.githubusercontent.com/welrbraga/dotfiles-tools/master/dot-install.sh'|bash
-```
+    ```bash
+
+    curl --silent 'https://raw.githubusercontent.com/welrbraga/dotfiles-tools/master/dot-install.sh'|bash
+
+    ```
 
 (1) Após o processo, arquivos dotfiles que não existiam nesta máquina, mas que estão no repositório, serão copiados.
 
 (2) As funções passam a ser válidas a partir da sua próxima sessão de terminal, ou se você recarregar o seu .bashrc
 
-```
-source .bashrc
-```
+    ```bash
+
+    source .bashrc
+
+    ```
 
 (3) Liste a situação atual do seu repositório de dotfiles
 
-```
-dot-status
-```
+    ```bash
+
+    dot-status
+
+    ```
 
 (4) Caso haja arquivos equivalentes no repositório e em sua máquina, eles serão exibidos como "M" (modified).
 
 Você pode desfazer a modificação local e usar a versão do repositório usando o comando dot-undo. Por exemplo para usar a versão do arquivo .bash_logout que está no repositório:
 
-```
-dot-undo .bash_logout
-```
+    ```bash
+
+    dot-undo .bash_logout
+
+    ```
 
 Ou para preservar e usar a versão que está nesta máquina, use o comando dot-track para que o arquivo seja versionado e passe a ser a versão oficial que será replicada em todas as suas outras máquinas. Por exemplo para manter o arquivo .vimrc desta máquina:
 
-```
-dot-track .vimrc "Versão do vimrc instalada no notebook"
-```
+    ```bash
 
+    dot-track .vimrc "Versão do vimrc instalada no notebook"
+
+    ```
 
 ## Teste em container
 
 Isso não é necessário para nenhum usuário final. Este é apenas um container de teste com uma distribuição Linux simples usada para testes da ferramenta.
 
-```
-docker build --tag dotfiles . && docker run -ti --rm dotfiles /bin/bash
-```
+    ```bash
+
+    docker build --tag dotfiles . && docker run -ti --rm dotfiles /bin/bash
+    
+    ```
