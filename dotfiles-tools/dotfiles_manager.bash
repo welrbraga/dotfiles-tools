@@ -151,10 +151,10 @@ dot-diff() {
 
 #Autopull pode ser executada no login para carregar as novas ferramentas
 dot-autopull() {
-    ping -c 1 github.com >/dev/null 2>&1 && dot-pull
+    ping -c1 -W1 github.com >/dev/null 2>&1 && dot-pull
 }
 
 #Autopush pode ser executado no logout para enviar as modificações para o server
 dot-autopush() {
-    ping -c 1 github.com >/dev/null 2>&1 && dot-push
+    ping -c1 -W1 github.com >/dev/null 2>&1 && dot-push
 }
