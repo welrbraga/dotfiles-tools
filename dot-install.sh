@@ -75,10 +75,13 @@ dot_replicate() {
 PATH_INSTALL="$HOME/dotfiles-tools"
 CONFFILE="$HOME/.dotfiles.conf"
 
+mkdir -p "$PATH_INSTALL/hooks"
+
 echo "# Obtem os arquivos atualizados"
 get_file "dotfiles_manager.bash"
 get_file "dotfiles_install.bash"
 get_file "dotfiles.template.conf"
+get_file "hooks/post-commit"
 
 if [ ! -f "${CONFFILE}" ]; then
     echo "# Criando arquivo de configuração a ser personalizado"
