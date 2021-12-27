@@ -22,19 +22,19 @@ EOF
 
 }
 
-# Realiza a primeira configuração interativa do sistema
-dot_first_setup() {
-  read -p "Your name: " FULLNAME
-  read -p "Your e-mail: " MAILADDRESS
-  read -p "Github Login: " GITHUB_LOGIN
-  read -p "Github Repo: " GITHUB_REPO
+# # Realiza a primeira configuração interativa do sistema
+# dot_first_setup() {
+#   read -p "Your name: " FULLNAME
+#   read -p "Your e-mail: " MAILADDRESS
+#   read -p "Github Login: " GITHUB_LOGIN
+#   read -p "Github Repo: " GITHUB_REPO
 
-  sed -e "s|^FULLNAME=.*|FULLNAME=\"${FULLNAME}\"|" \
-      -e "s|^MAILADDRESS=.*|MAILADDRESS=\"${MAILADDRESS}\"|" \
-      -e "s|^GITHUB_LOGIN=.*|GITHUB_LOGIN=\"${GITHUB_LOGIN}\"|" \
-      -e "s|^GITHUB_REPO=.*|GITHUB_REPO=\"${GITHUB_REPO}\"|" \
-      -i "${CONFFILE}"
-}
+#   sed -e "s|^FULLNAME=.*|FULLNAME=\"${FULLNAME}\"|" \
+#       -e "s|^MAILADDRESS=.*|MAILADDRESS=\"${MAILADDRESS}\"|" \
+#       -e "s|^GITHUB_LOGIN=.*|GITHUB_LOGIN=\"${GITHUB_LOGIN}\"|" \
+#       -e "s|^GITHUB_REPO=.*|GITHUB_REPO=\"${GITHUB_REPO}\"|" \
+#       -i "${CONFFILE}"
+# }
 
 # Personaliza o repositório com valores do arquivo dotfiles.conf
 dot_custom_repo() {
@@ -75,24 +75,20 @@ dot_replicate() {
 PATH_INSTALL="$HOME/dotfiles-tools"
 CONFFILE="$HOME/.dotfiles.conf"
 
-echo "**Obtem os arquivos atualizados"
+echo "# Obtem os arquivos atualizados"
 get_file "dotfiles_manager.bash"
 get_file "dotfiles_install.bash"
 get_file "dotfiles.template.conf"
 
-# shellcheck disable=SC1091
-# source "$PATH_INSTALL/dotfiles_install.bash"
-
 if [ ! -f "${CONFFILE}" ]; then
-  echo "# Criando arquivo de configuração a ser personalizado"
-  cp "$HOME/dotfiles-tools/dotfiles.template.conf" "${CONFFILE}"
-
-  dot_first_setup
-
+    echo "# Criando arquivo de configuração a ser personalizado"
+    cp "$HOME/dotfiles-tools/dotfiles.template.conf" "${CONFFILE}"
+    # dot_first_setup
 fi
 
 #Carrega o arquivo com as configurações do repositório  do usuário
 
+echo "# Carregando o novo arquivo de configuração"
 # shellcheck disable=SC1091
 source "${CONFFILE}"
 
@@ -100,6 +96,9 @@ if [ "$GITHUB_REPO" == "mydotfilesrepo" ]; then
     echo "**ERRO** dotfile-tools não configurado."
     echo "**ERRO** edite o arquivo de configuração ${CONFFILE}"
     exit 1
+else
+    echo "Usuario: $GITHUB_LOGIN - $FULLNAME ($MAILADDRESS)"
+    echo "URL do Repositório: $DOTFILE_GITREMOTE"
 fi
 
 #Carrega as funções de gerência
