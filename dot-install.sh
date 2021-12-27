@@ -87,14 +87,12 @@ if [ ! -f "${CONFFILE}" ]; then
 fi
 
 #Carrega o arquivo com as configurações do repositório  do usuário
-
-echo "# Carregando o novo arquivo de configuração"
 # shellcheck disable=SC1091
 source "${CONFFILE}"
 
 if [ "$GITHUB_REPO" == "mydotfilesrepo" ]; then
     echo "**ERRO** dotfile-tools não configurado."
-    echo "**ERRO** edite o arquivo de configuração ${CONFFILE}"
+    echo "**ERRO** Edite o arquivo de configuração ${CONFFILE} e repita o processo de instalação"
     exit 1
 else
     echo "Usuario: $GITHUB_LOGIN - $FULLNAME ($MAILADDRESS)"
