@@ -8,10 +8,10 @@ dotfiles são todos aqueles arquivos ocultos em seu $HOME e que são usados para
 
 Os arquivos abaixo são exemplos de dotfiles:
 
-    .bashrc
-    .profiles
-    .vimrc
-    .gitconfig
+* .bashrc
+* .profiles
+* .vimrc
+* .gitconfig
 
 Sem uma ferramenta de gerência você terá arquivos independentes em todas as máquinas e terá que gerência-los individualmente. Para maioria das pessoas isso pode ser desejável ou não fazer diferença, mas para um nicho de pessoas este controle é importante.
 
@@ -60,13 +60,12 @@ arquivos que precisem ser personalizado por máquina.
 
 Como todos os arquivos não passa de lotes de comando shell, uma possibilidade (para alguns casos) é usar comandos especificos em estruturas "if/then/fi. Como no exemplo abaixo em que um novo diretório será adicionado ao PATH apenas na máquina "myserver".
 
-    ```bash
+```bash
+if [ "$HOSTNAME" == "myserver" ]; then
+    PATH=$PATH:/opt/adminscripts
+fi
 
-    if [ "$HOSTNAME" == "myserver" ]; then
-        PATH=$PATH:/opt/adminscripts
-    fi
-
-    ```
+```
 
 Infelizmente eu tenho certeza que em outras ocasiões esta abordagem não funcionará, neste caso eu ainda não pensei em uma soluação, e quando ocorre eu simplesmente não versiono o tal arquivo.
 
@@ -86,10 +85,10 @@ Lembrando que no Windows o procedimento a ser realizado é o mesmo, desde que vo
 
 (1) A partir da linha de comandos da máquina cliente use os comandos a seguir:
 
-    ```bash
-    ssh-keygen -t rsa -f meusdotfiles-desktopcasa
+```bash
+ssh-keygen -t rsa -f meusdotfiles-desktopcasa
 
-    ```
+```
 
 **OBS 1**: Por padrão uma chave RSA com 3072bits será criada. Isso será suficiente para o nosso propósito.
 
@@ -101,27 +100,27 @@ Lembrando que no Windows o procedimento a ser realizado é o mesmo, desde que vo
 
 (3) Se estiver no Linux, altere as permissões de acesso do arquivo de chaves criado
 
-    ```bash
-    chmod 0600 ~/.ssh/meusdotfiles-desktopcasa
-    ```
+```bash
+chmod 0600 ~/.ssh/meusdotfiles-desktopcasa
+```
 
 (3) Crie um arquivo ~/.ssh/config (caso não tenha) e adicione a seção abaixo:
 
-    ```txt
-    Host github.com-meusdotfiles
-        Hostname github.com
-        IdentityFile=~/.ssh/meusdotfiles-desktopcasa
+```code
+Host github.com-meusdotfiles
+    Hostname github.com
+    IdentityFile=~/.ssh/meusdotfiles-desktopcasa
 
-    ```
+```
 
 **OBS**: Altere as linhas acima conforme o nome do seu repositório e nome do arquivo de chave privada.
 
 (4) Copie o conteúdo da sua chave pública (isso será usado no próximo passo)
 
-    ```bash
-    cat ~/.ssh/meusdotfiles.pub
-    [SELECIONE E COPIE O CONTEUDO COMPLETO EXIBIDO]
-    ```
+```bash
+cat ~/.ssh/meusdotfiles.pub
+[SELECIONE E COPIE O CONTEUDO COMPLETO EXIBIDO]
+```
 
 (5) Adicione a chave a sessão "deploy Key" do seu repositório
 
@@ -137,70 +136,66 @@ O processo é detalhado na página oficial do Github <https://docs.github.com/pt
 
 (6) Valide o acesso e aceite a troca de chaves
 
-    ```bash
-    ssh git@github.com-meusdotfiles
+```bash
+ssh git@github.com-meusdotfiles
 
-    ```
+```
 
 **Obs:** Você verá uma mensagem como a mostrada abaixo após aceitar a troca de chaves:
 
-    PTY allocation request failed on channel 0
-    Hi seuusuario/meusdotfiles! You've successfully authenticated, but GitHub does not provide shell access.
-    Connection to github.com closed.
+```code
+PTY allocation request failed on channel 0
+Hi seuusuario/meusdotfiles! You've successfully authenticated, but GitHub does not provide shell access.
+Connection to github.com closed.
+```
 
 ## Instalação
 
 Este processo considera que você já tem um repositório de dotfiles configurado
 e você tenha criado um arquivo de configuração .dotfiles.conf (Copie dotfiles.template.conf e altere-o para refletir suas configurações)
 
-    ```bash
+```bash
+curl --silent 'https://raw.githubusercontent.com/welrbraga/dotfiles-tools/master/dot-install.sh'|bash
 
-    curl --silent 'https://raw.githubusercontent.com/welrbraga/dotfiles-tools/master/dot-install.sh'|bash
-
-    ```
+```
 
 (1) Após o processo, arquivos dotfiles que não existiam nesta máquina, mas que estão no repositório, serão copiados.
 
 (2) As funções passam a ser válidas a partir da sua próxima sessão de terminal, ou se você recarregar o seu .bashrc
 
-    ```bash
+```bash
+source .bashrc
 
-    source .bashrc
-
-    ```
+```
 
 (3) Liste a situação atual do seu repositório de dotfiles
 
-    ```bash
+```bash
+dot-status
 
-    dot-status
-
-    ```
+```
 
 (4) Caso haja arquivos equivalentes no repositório e em sua máquina, eles serão exibidos como "M" (modified).
 
 Você pode desfazer a modificação local e usar a versão do repositório usando o comando dot-undo. Por exemplo para usar a versão do arquivo .bash_logout que está no repositório:
 
-    ```bash
+```bash
+dot-undo .bash_logout
 
-    dot-undo .bash_logout
-
-    ```
+```
 
 Ou para preservar e usar a versão que está nesta máquina, use o comando dot-track para que o arquivo seja versionado e passe a ser a versão oficial que será replicada em todas as suas outras máquinas. Por exemplo para manter o arquivo .vimrc desta máquina:
 
-    ```bash
+```bash
+dot-track .vimrc "Versão do vimrc instalada no notebook"
 
-    dot-track .vimrc "Versão do vimrc instalada no notebook"
-
-    ```
+```
 
 ## Teste em container
 
 Isso não é necessário para nenhum usuário final. Este é apenas um container de teste com uma distribuição Linux simples usada para testes da ferramenta.
 
-    ```bash
+```bash
+docker build --tag dotfiles . && docker run -ti --rm dotfiles /bin/bash
 
-    docker build --tag dotfiles . && docker run -ti --rm dotfiles /bin/bash
-    
-    ```
+```
