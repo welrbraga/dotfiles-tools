@@ -4,8 +4,7 @@ Conjunto de ferramentas essenciais para gerenciar dotfiles.
 
 ## O que são dotfiles
 
-dotfiles são todos aqueles arquivos ocultos em seu $HOME e que são usados
-para configurar suas ferramentas de trabalho.
+dotfiles são todos aqueles arquivos ocultos em seu $HOME e que são usados para configurar suas ferramentas de trabalho.
 
 Os arquivos abaixo são exemplos de dotfiles:
 
@@ -14,16 +13,9 @@ Os arquivos abaixo são exemplos de dotfiles:
     .vimrc
     .gitconfig
 
-Sem uma ferramenta de gerência você terá arquivos independentes em todas as
-máquinas e terá que gerência-los individualmente. Para maioria das pessoas isso
-pode ser desejável ou não fazer diferença, mas para um nicho de pessoas este
-controle é importante.
+Sem uma ferramenta de gerência você terá arquivos independentes em todas as máquinas e terá que gerência-los individualmente. Para maioria das pessoas isso pode ser desejável ou não fazer diferença, mas para um nicho de pessoas este controle é importante.
 
-Se em algum momento no seu trabalho com o desktop, por exemplo, você sentiu falta
-de um alias ou função que criou no notebook e vice-versa, ou se você  lida com
-dezenas ou centenas de servidores e sentiu a falta daquele seu script especial que
-resolve o problema com um comando pequeno mas que foi criado no desktop, então
-este tipo de ferramenta (gerenciador de dotfiles) é importante para você.
+Se em algum momento no seu trabalho com o desktop, por exemplo, você sentiu falta de um alias ou função que criou no notebook e vice-versa, ou se você  lida com dezenas ou centenas de servidores e sentiu a falta daquele seu script especial que resolve o problema com um comando pequeno mas que foi criado no desktop, então este tipo de ferramenta (gerenciador de dotfiles) é importante para você.
 
 ## Pré-requisitos
 
@@ -33,22 +25,40 @@ este tipo de ferramenta (gerenciador de dotfiles) é importante para você.
 * Curl
 * Unzip
 
-(2) Você deverá criar um repositório PRIVADO e vazio no Github que será onde você manterá sua coleção de dotfiles. É de lá que replicaremos os nossos dotfiles para todas as nossas máquinas.
+(2) Você deverá criar um repositório PRIVADO e vazio no Github que será onde você manterá sua coleção de dotfiles.
 
-(3) Este repositório deverá possuir uma chave de deploy (ssh-rsa ou outra) com permissão de escrita, para podermos mantê-lo atualizado. Você precisará gerar uma chave destas para cada máquina que desejar manter contato com este repositório (recomendável - consulte a seção **CHAVE DE DEPLOY NO GITHUB** para obter instruções de como proceder); ou copiar uma única chave privada para todas as máquinas (é melhor ter cuidado com esta abordagem).
+(3) O seu repositório de dotfiles deverá ser acessível da sua máquina e para isso você precisará exportar uma chave de deploy (ssh-rsa ou outra) com permissão de escrita para este repositório, ou ter uma chave ssh-rsa com acesso completo a sua conta Github.
 
-Caso não queira usar o Github em favor de outro sistema remoto você pode editá-lo no arquivo ".dotfiles.conf", porém eu ainda não testei esta possibilidade, se quiser arriscar, por sua conta e risco me dê um retorno sobre os testes.
+### Aviso 1: Chave na conta ou chave de deploy no repositório
 
-## Aviso 1: Um repositório várias máquinas
+Normalmente acessamos o github por linha de comandos após o envio da parte "pública" de um par de chaves publicas no padrão RSA.
 
-Você pode criar um único repositório de onde irá clonar em todas as suas estações
-e servidores, de forma a compartilhar seus arquivos em todos os seus ambientes
-de trabalho, no entanto eu ainda não implementei nenhum recurso para gerencia de
+Há duas formas de se disponiblizar a sua chave pública para acesso aos repositórios no Github:
+
+(1) Acesso total
+
+A chave pode estar configurada na conta (Foto de Perfil > Settings > SSH and GPG keys > SSH keys > Add key) permitindo acesso a todos os seus repositórios
+
+Esta opção permite acesso total a seus repositórios, então utilize-a apenas se você for o único usuário da máquina, ou se confiar cegamente nos demais usuários.
+
+(2) Acesso apenas a um repositório
+
+A chave pode ser configurada em um único repositório (Repositório > Settings > Deploy keys > Add deploy key), permitindo acesso exclusivo apenas a ele.
+
+Como esta opção permite acesso apenas ao repositório onde ela foi definida, é uma boa recomendação usa-la em máquinas compartilhadas por várias pessoas. Desta forma se alguém fizer algo de errado não destruirá a sua conta no Github e como você terá réplicas deste repositório em outras máquinas será fácil restaurá-lo novamente caso isso ocorra.
+
+Consulte a seção **CHAVE DE DEPLOY NO GITHUB** para obter instruções de como criar sua chave.
+
+### Aviso 2: Mas o Github... Pode ser outro!?
+
+Caso não queira usar o Github para armazenar o seu repositório de dotfiles, você pode alterar isso no arquivo ".dotfiles.conf", porém eu ainda não testei esta possibilidade, se quiser arriscar, por sua conta e risco, me dê um retorno sobre os testes.
+
+### Aviso 3: Um repositório, várias máquinas
+
+Você pode criar um único repositório de onde irá clonar em todas as suas estações e servidores, de forma a compartilhar seus arquivos em todos os seus ambientes de trabalho, no entanto eu ainda não implementei nenhum recurso para gerencia de
 arquivos que precisem ser personalizado por máquina.
 
-Como todos os arquivos não passa de lotes de comando shell, uma possibilidade é usar
-comandos especificos em estruturas "if/then/fi. Como no exemplo abaixo em que um novo
-diretório será adicionado ao PATH apenas na máquina "myserver".
+Como todos os arquivos não passa de lotes de comando shell, uma possibilidade (para alguns casos) é usar comandos especificos em estruturas "if/then/fi. Como no exemplo abaixo em que um novo diretório será adicionado ao PATH apenas na máquina "myserver".
 
     ```bash
 
@@ -58,36 +68,49 @@ diretório será adicionado ao PATH apenas na máquina "myserver".
 
     ```
 
-## Aviso 2: Arquivos com senhas
+Infelizmente eu tenho certeza que em outras ocasiões esta abordagem não funcionará, neste caso eu ainda não pensei em uma soluação, e quando ocorre eu simplesmente não versiono o tal arquivo.
 
-Ainda não implementei nenhum recurso para lidar com arquivos contendo "segredos",
-chaves ssh, senhas etc, portanto não versione estes arquivos a menos que seu
-repositório seja realmente privado e você tenha consciência dos riscos disto.
+### Aviso 4: Arquivos com senhas
+
+Ainda não implementei nenhum recurso para lidar com arquivos contendo "segredos", chaves ssh, senhas etc, portanto - para sua segurança - não versione estes arquivos a menos que você saiba exatamente o que está fazendo e tenha consciência dos riscos disto.
 
 ## CHAVE DE DEPLOY NO GITHUB
 
-A forma mais segura de usar um repositório privado no Github é manter um par de chaves pub/priv para cada máquina que precisará acessa-lo. Isso permite que em caso de violação da credencial, você possa excluir a chave do repositório bloqueando apenas a a máquina comprometida.
+Talvez você já tenha um par no seu diretório $HOME/.ssh e que provavelmente é usada para toda a sua conta Github, mas como já disse antes (vide a opção 2 do [Aviso 1: Chave na conta ou chave de deploy no repositório](#aviso-1-chave-na-conta-ou-chave-de-deploy-no-repositório)), a forma mais segura de usar um repositório privado no Github é manter um par de chaves pub/priv para cada repositório e para cada máquina que precisará acessa-lo.
 
-(1) A partir da linha de comandos da máquina cliente use comando a seguir:
+Isso permite que em caso de violação da credencial, você possa excluir a chave do repositório bloqueando apenas aquela máquina comprometida, e que só tinha acesso ao repositório de dotfiles e não toda a sua conta. Vamos então criar uma chave exclusiva para acesso apenas ao repositório de dotfiles, em uma máquina que não seja a sua principal.
 
-    ```bash
-    ssh-keygen -t rsa
-    ```
+Lembrando que no Windows o procedimento a ser realizado é o mesmo, desde que você instale o Putty na máquina.
 
-**OBS**: Informe um nome para o arquivo que identifique este repositório, isso evitará problemas de acesso a outros repositórios que você precise usar no futuro. ex: ~/.ssh/meusdotfiles
+### Criando uma chave RSA
 
-(2) Altere as permissões de acesso do arquivo de chaves criado
+(1) A partir da linha de comandos da máquina cliente use os comandos a seguir:
 
     ```bash
-    chmod 0600 ~/.ssh/meusdotfiles
+    ssh-keygen -t rsa -f meusdotfiles-desktopcasa
+
     ```
 
-(3) Crie um arquivo ~/.ssh/config e adicione a seção abaixo:
+**OBS 1**: Por padrão uma chave RSA com 3072bits será criada. Isso será suficiente para o nosso propósito.
+
+**OBS 2**: Será pedido que você defina uma senha para este certificado, o que deve ser ignorado. Apenas tecle ENTER duas vezes para ignorar o pedido.
+
+**OBS 3**: O nome do arquivo (neste exemplo "meusdotfiles-desktopcasa") pode ser qualquer coisa, mas eu sugiro que ele seja exclusivo e identifique a máquina e o repositório a ser acessado. Isso evitará problemas futuros, caso você necessite descredenciar alguma máquina.
+
+(2) Se você não estiver no diretório "$HOME/.ssh", será necessário mover os arquivos gerados para lá.
+
+(3) Se estiver no Linux, altere as permissões de acesso do arquivo de chaves criado
+
+    ```bash
+    chmod 0600 ~/.ssh/meusdotfiles-desktopcasa
+    ```
+
+(3) Crie um arquivo ~/.ssh/config (caso não tenha) e adicione a seção abaixo:
 
     ```txt
     Host github.com-meusdotfiles
         Hostname github.com
-        IdentityFile=~/.ssh/meusdotfiles
+        IdentityFile=~/.ssh/meusdotfiles-desktopcasa
 
     ```
 
@@ -102,7 +125,7 @@ A forma mais segura de usar um repositório privado no Github é manter um par d
 
 (5) Adicione a chave a sessão "deploy Key" do seu repositório
 
-O processo é detalhado na página oficial do Github <https://docs.github.com/pt/developers/overview/managing-deploy-keys#deploy-keys>. Consulte-o como referência absoluta sobre o procedimento, pois ele pode ter sido alterado e o passo a passo aqui descrito não refletir a verdade atual.
+O processo é detalhado na página oficial do Github <https://docs.github.com/pt/developers/overview/managing-deploy-keys#deploy-keys>. Consulte-o como referência absoluta sobre o procedimento, pois ele pode ter sido alterado e o passo a passo aqui descrito não refletir a versão atual do Github.
 
 1 - Abra a seção "Settings" do seu repositório de dotfiles.
 2 - Clique na aba "Deploy Keys"
