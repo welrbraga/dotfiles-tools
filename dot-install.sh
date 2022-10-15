@@ -79,7 +79,6 @@ mkdir -p "$PATH_INSTALL/hooks"
 
 echo "# Obtem os arquivos atualizados"
 get_file "dotfiles_manager.bash"
-get_file "dotfiles_install.bash"
 get_file "dotfiles.template.conf"
 get_file "hooks/post-commit"
 
