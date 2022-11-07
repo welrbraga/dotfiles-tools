@@ -13,10 +13,8 @@ dot_custom_bashrc() {
     cat <<EOF >>$HOME/.bashrc
 
 source $HOME/dotfiles-tools/dotfiles_manager.bash
-
-echo "Recebendo atualizações dos dotfiles, se possível"
-dot-autopull
-dot-reload .bashrc
+echo "# Recebendo atualizações dos dotfiles, se possível"
+dot-autopull && dot-reload .bashrc &
 
 EOF
 
@@ -89,7 +87,7 @@ if [ ! -f "${CONFFILE}" ]; then
 fi
 
 #Carrega o arquivo com as configurações do repositório  do usuário
-# shellcheck disable=SC1091
+# shellcheck disable=SC1090
 source "${CONFFILE}"
 
 if [ "$GITHUB_REPO" == "mydotfilesrepo" ]; then
