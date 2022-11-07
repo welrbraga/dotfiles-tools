@@ -19,8 +19,8 @@ dot_update() {
   REPONAME="dotfiles-tools"
   OFFICIALREPO="https://github.com/welrbraga/${REPONAME}"
   BRANCH="master"
-  cd /tmp
-  tmpzip="`tempfile`.zip" #já inclui o /tmp antes do nome
+  cd /tmp || return
+  tmpzip="$(mktemp).zip" #já inclui o /tmp antes do nome
   curl --silent --location "${OFFICIALREPO}/archive/${BRANCH}.zip" --output "${tmpzip}"
   COMMIT=$(unzip -u "${tmpzip}" | awk '{ nlines++ ; if (nlines==2) {print $0;}; }' )
   INSTALLED=$(cat $HOME/dotfiles-tools/COMMIT 2>/dev/null || echo "Unknown")
@@ -70,17 +70,17 @@ dot-pull() {
 #Edita um arquivo e já submete a mudança
 dot-edit() {
     ALT="0"
-    TEMPFILE=`tempfile`
+    TEMPFILE="$(mktemp)"
     ARQ=$1
-    [ -L $1 ] && ARQ="`readlink -e $1`"
+    [ -L $1 ] && ARQ="$(readlink -e $1)"
     md5sum "$ARQ" >"$TEMPFILE" ; #Calcula MD5 antes da edição
     editor "$ARQ" ;                        #Edita o arquivo
     md5sum -c "$TEMPFILE" >/dev/null 2>&1 || ALT="1"
     if [ "$ALT" == "1" ]; then
       MSG=""
       echo "Informe a razão do commit"
-      read -p "MSG> " MSG
-      [ "$MSG" == "" ] && MSG="Submissao em `date`"
+      read -r -p "MSG> " MSG
+      [ "$MSG" == "" ] && MSG="Submissao em $(date)"
       dot-track "$ARQ" "$MSG"
     fi
     return $ALT
