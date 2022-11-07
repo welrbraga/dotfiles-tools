@@ -19,22 +19,22 @@ dot_update() {
   REPONAME="dotfiles-tools"
   OFFICIALREPO="https://github.com/welrbraga/${REPONAME}"
   BRANCH="master"
-  cd /tmp || return
-  tmpzip="$(mktemp).zip" #já inclui o /tmp antes do nome
-  curl --silent --location "${OFFICIALREPO}/archive/${BRANCH}.zip" --output "${tmpzip}"
-  COMMIT=$(unzip -u "${tmpzip}" | awk '{ nlines++ ; if (nlines==2) {print $0;}; }' )
-  INSTALLED=$(cat $HOME/dotfiles-tools/COMMIT 2>/dev/null || echo "Unknown")
-  echo $COMMIT > /tmp/${REPONAME}-${BRANCH}/dotfiles-tools/COMMIT
-  echo "Instalado: $INSTALLED"
-  echo "Obtido:    $COMMIT"
-  if [ ! "$COMMIT" == "$INSTALLED" ]; then
-    echo "Atualizando";
-    cp -r /tmp/${REPONAME}-${BRANCH}/dotfiles-tools "$HOME/";
-  else
-    echo "Nada alterado";
-  fi
-  rm -rf /tmp/${REPONAME}-${BRANCH} $tmpzip
-  cd "$OLDPWD"
+  cd /tmp && (
+    tmpzip="$(mktemp).zip" #já inclui o /tmp antes do nome
+    curl --silent --location "${OFFICIALREPO}/archive/${BRANCH}.zip" --output "${tmpzip}"
+    COMMIT=$(unzip -u "${tmpzip}" | awk '{ nlines++ ; if (nlines==2) {print $0;}; }' )
+    INSTALLED=$(cat $HOME/dotfiles-tools/COMMIT 2>/dev/null || echo "Unknown")
+    echo $COMMIT > /tmp/${REPONAME}-${BRANCH}/dotfiles-tools/COMMIT
+    echo "Instalado: $INSTALLED"
+    echo "Obtido:    $COMMIT"
+    if [ ! "$COMMIT" == "$INSTALLED" ]; then
+        echo "Atualizando";
+        cp -r /tmp/${REPONAME}-${BRANCH}/dotfiles-tools "$HOME/";
+    else
+        echo "Nada alterado";
+    fi
+    rm -rf /tmp/${REPONAME}-${BRANCH} $tmpzip
+  )
 }
 
 dotfile() {
@@ -93,29 +93,35 @@ dot-log() {
 
 #Editor para arquivo de aliases
 dot-alias() {
+    # shellcheck disable=SC1090
     dot-edit ~/.bash_aliases || source ~/.bash_aliases
 }
 
 
 #Editor para arquivo de funções
 dot-functions() {
+    # shellcheck disable=SC1090
     dot-edit ~/.bash_functions || source ~/.bash_functions
 }
 
 #Carrega as modificações nos principais arquivos de funções
 dot-reload() {
+    # shellcheck disable=SC1090
     [ "$1" == ".bashrc" ] || source ~/dotfiles-tools/dotfiles_manager.bash
     if [ -f ~/.bash_aliases ]; then
+        # shellcheck disable=SC1090
         . ~/.bash_aliases
     fi
 
     if [ -f ~/.bash_functions ]; then
+        # shellcheck disable=SC1090
         . ~/.bash_functions
     fi
 }
 
 #Editor para arquivo de gerencia de dotfiles
 dot-dot() {
+    # shellcheck disable=SC1090
     dot-edit ~/dotfiles-tools/dotfiles_manager.bash || source ~/dotfiles-tools/dotfiles_manager.bash
 }
 
