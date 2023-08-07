@@ -94,7 +94,7 @@ Não há nenhum recurso para lidar com arquivos contendo "segredos", chaves ssh,
 
 Talvez você já tenha um par no seu diretório $HOME/.ssh e que provavelmente é usada para toda a sua conta Github, mas como já disse antes (vide a opção 2 do [Aviso 1: Chave na conta ou chave de deploy no repositório](#aviso-1-chave-na-conta-ou-chave-de-deploy-no-repositório)), a forma mais segura de usar um repositório privado no Github é manter um par de chaves pub/priv para cada repositório e para cada máquina que precisará acessá-lo.
 
-Isso permite que em caso de violação da credencial, você possa excluir a chave do repositório bloqueando apenas aquela máquina comprometida, e que só tinha acesso ao repositório de dotfiles e não toda a sua conta. 
+Isso permite que em caso de violação da credencial, você possa excluir a chave do repositório bloqueando apenas aquela máquina comprometida, e que só tinha acesso ao repositório de dotfiles e não toda a sua conta.
 
 Vamos então criar uma chave exclusiva para acesso apenas ao repositório de dotfiles, em uma máquina que não seja a sua principal.
 
