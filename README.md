@@ -190,7 +190,7 @@ Baixe as atualizações e corrija o que causa o conflito para que o SSH volte a 
 Este processo considera que você já tem um repositório de dotfiles configurado
 e você tenha criado um arquivo de configuração .dotfiles.conf (Copie dotfiles.template.conf e altere-o para refletir suas configurações)
 
-Crie o aruqivo de configuração
+Crie o arquivo de configuração
 
 ```bash
 [ -f .dotfiles.conf ] || curl 'https://raw.githubusercontent.com/welrbraga/dotfiles-tools/master/dotfiles-tools/dotfiles.template.conf' --output .dotfiles.conf
