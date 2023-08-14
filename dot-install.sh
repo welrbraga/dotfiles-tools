@@ -10,9 +10,11 @@ get_file() {
 # Configura o dotfiles_manager autoload on .bashrc file
 dot_custom_bashrc() {
 
-    cat <<EOF >>$HOME/.bashrc
+    LINE_LOAD="source $HOME/dotfiles-tools/dotfiles_manager.bash"
+    grep "$LINE_LOAD" "$HOME/.bashrc" || \
+        cat <<EOF >>$HOME/.bashrc
 
-source $HOME/dotfiles-tools/dotfiles_manager.bash
+$LINE_LOAD
 echo "# Recebendo atualizações dos dotfiles, se possível"
 dot-autopull && dot-reload .bashrc &
 
