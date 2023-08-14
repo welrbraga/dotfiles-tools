@@ -42,6 +42,11 @@ dotfile() {
 }
 
 #Registra a mudança em um arquivo dotfile
+dot-add() {
+    dotfile add "$1"
+}
+
+#Registra e "comita" a mudança em um arquivo dotfile
 dot-track() {
     dotfile add "$1"
     dotfile commit -m "$2"
@@ -73,8 +78,8 @@ dot-edit() {
     TEMPFILE="$(mktemp)"
     ARQ=$1
     [ -L $1 ] && ARQ="$(readlink -e $1)"
-    md5sum "$ARQ" >"$TEMPFILE" ; #Calcula MD5 antes da edição
-    editor "$ARQ" ;                        #Edita o arquivo
+    md5sum "$ARQ" >"$TEMPFILE" ; # Calcula MD5 antes da edição
+    editor "$ARQ" ;              # Edita o arquivo
     md5sum -c "$TEMPFILE" >/dev/null 2>&1 || ALT="1"
     if [ "$ALT" == "1" ]; then
       MSG=""
@@ -97,7 +102,6 @@ dot-alias() {
     dot-edit ~/.bash_aliases || source ~/.bash_aliases
 }
 
-
 #Editor para arquivo de funções
 dot-functions() {
     # shellcheck disable=SC1090
@@ -108,15 +112,15 @@ dot-functions() {
 dot-reload() {
     # shellcheck disable=SC1090
     [ "$1" == ".bashrc" ] || source ~/dotfiles-tools/dotfiles_manager.bash
-    if [ -f ~/.bash_aliases ]; then
-        # shellcheck disable=SC1090
-        . ~/.bash_aliases
-    fi
+    # if [ -f ~/.bash_aliases ]; then
+    #     # shellcheck disable=SC1090
+    #     . ~/.bash_aliases
+    # fi
 
-    if [ -f ~/.bash_functions ]; then
-        # shellcheck disable=SC1090
-        . ~/.bash_functions
-    fi
+    # if [ -f ~/.bash_functions ]; then
+    #     # shellcheck disable=SC1090
+    #     . ~/.bash_functions
+    # fi
 }
 
 #Editor para arquivo de gerencia de dotfiles
