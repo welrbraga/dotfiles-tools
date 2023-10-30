@@ -59,6 +59,10 @@ dot-untrack() {
 
 #Lista os arquivos modificados no ultimo commit
 dot-lastchange() {
+    dotfile log --max-count=1
+    echo ""
+    echo "Arquivos alterados:"
+    echo ""
     dotfile show --name-status --pretty="" "$@"
 }
 
