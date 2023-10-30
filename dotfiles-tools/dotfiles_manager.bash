@@ -19,7 +19,8 @@ dot_update() {
   REPONAME="dotfiles-tools"
   OFFICIALREPO="https://github.com/welrbraga/${REPONAME}"
   BRANCH="master"
-  cd /tmp && (
+  (
+    cd /tmp || return 15
     tmpzip="$(mktemp).zip" #já inclui o /tmp antes do nome
     curl --silent --location "${OFFICIALREPO}/archive/${BRANCH}.zip" --output "${tmpzip}"
     COMMIT=$(unzip -u "${tmpzip}" | awk '{ nlines++ ; if (nlines==2) {print $0;}; }' )
