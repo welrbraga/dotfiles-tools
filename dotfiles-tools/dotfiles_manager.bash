@@ -43,7 +43,7 @@ dotfile() {
 
 #Registra a mudança em um arquivo dotfile
 dot-add() {
-    dotfile add "$1"
+    dotfile add "$@"
 }
 
 #Registra e "comita" a mudança em um arquivo dotfile
@@ -54,17 +54,17 @@ dot-track() {
 
 #Deixa de registrar as mudanças em um arquivo dotfile
 dot-untrack() {
-    dotfile rm --cached "$1"
+    dotfile rm --cached "$@"
 }
 
 #Lista os arquivos modificados no ultimo commit
 dot-lastchange() {
-    dotfile show --name-status --pretty=""
+    dotfile show --name-status --pretty="" "$@"
 }
 
 #Submete as mudanças ao repositório
 dot-push() {
-    dotfile push
+    dotfile push "$@"
 }
 
 #Obtem mas atualizações do repositório
@@ -96,7 +96,7 @@ dot-edit() {
 
 #Simplifica a visualização de logs
 dot-log() {
-    dotfile log
+    dotfile log "$@"
 }
 
 #Editor para arquivo de aliases
@@ -134,32 +134,32 @@ dot-dot() {
 
 #Lista todos os arquivos sobre a gerencia do dotfile-manager
 dot-ls() {
-    dotfile ls-files -v
+    dotfile ls-files -v "$@"
 }
 
 #Desfaz um git add ou git rm
 dot-unstage() {
-    dotfile reset HEAD -- $1
+    dotfile reset HEAD -- "$@"
 }
 
 #Desfaz alteracoes ainda nao comitadas
 dot-undo() {
-    dotfile checkout -- $1
+    dotfile checkout -- "$@"
 }
 
 #Desfaz apenas o ultimo commit
 dot-uncommit() {
-    dotfile revert HEAD
+    dotfile revert HEAD "$@"
 }
 
 #Exibe o status do repositorio
 dot-status() {
-    dotfile status
+    dotfile status "$@"
 }
 
 #Executa um diff
 dot-diff() {
-    dotfile diff $1
+    dotfile diff "$@"
 }
 
 #Autopull pode ser executada no login para carregar as novas ferramentas
