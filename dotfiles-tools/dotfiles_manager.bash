@@ -69,7 +69,10 @@ dot-push() {
 
 #Obtem mas atualizações do repositório
 dot-pull() {
+    actualcommit=$(dotfile log --max-count=1 --pretty=format:"%h")
     dotfile pull
+    newcommit=$(dotfile log --max-count=1 --pretty=format:"%h")
+    dotfile log ${actualcommit}..${newcommit}
 }
 
 #Edita um arquivo e já submete a mudança
