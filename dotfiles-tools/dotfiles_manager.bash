@@ -37,6 +37,45 @@ dot_update() {
   )
 }
 
+# Ativa o ambiente dev
+dot_dev_enable() {
+    echo "Troca o ambiente de produção pelo dev"
+    if [ "$PWD" != "$HOME" ] && \ 
+       [ -d $PWD/dotfiles-tools ] && \
+       [ -d $HOME/dotfiles-tools ] && \
+       [ ! -h $HOME/dotfiles-tools ] && \
+       [ ! -d $HOME/dotfiles-tools-prod ] ; then
+
+        mv $HOME/dotfiles-tools $HOME/dotfiles-tools-prod
+        ln -s $PWD/dotfiles-tools $HOME/dotfiles-tools
+        dot-reload
+    else
+        echo "Não é possível ativar o ambiente dev"
+        echo "- Você deve estar no ambiente "dev", não no seu HOME"
+        echo "- dotfiles-tools deve existir no diretório atual (seu ambiente dev)"
+        echo "- dotfiles-tools deve ser um diretório em seu HOME (seu ambiente prod)"
+        echo "- dotfiles-tools-prod não pode existir em seu HOME"
+        return 10
+    fi
+}
+
+# Ativa o ambiente de produção
+dot_dev_disable() {
+    echo "Troca o ambiente dev pelo de produção"
+    if [ -h $HOME/dotfiles-tools ] && \
+       [ -d $HOME/dotfiles-tools-prod ]; then
+        rm $HOME/dotfiles-tools
+        mv $HOME/dotfiles-tools-prod $HOME/dotfiles-tools
+        dot-reload
+    else
+        echo "Não é possível ativar o ambiente produção ou ele já está ativo"
+        echo "- dotfiles-tools deve ser um link em seu HOME (seu ambiente dev)"
+        echo "- dotfiles-tools-prod deve ser um diretório em seu HOME"
+
+        return 10
+    fi
+}
+
 dotfile() {
   /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME "$@"
 }
