@@ -52,10 +52,9 @@ dot_dev_enable() {
         dot-reload
     else
         echo "Não é possível ativar o ambiente dev"
-        echo "- Você deve estar no ambiente "dev", não no seu HOME"
-        echo "- dotfiles-tools deve existir no diretório atual (seu ambiente dev)"
-        echo "- dotfiles-tools deve ser um diretório em seu HOME (seu ambiente prod)"
-        echo "- dotfiles-tools-prod não pode existir em seu HOME"
+        echo "- Você deveria estar na pasta de trabalho Git do projeto"
+        echo "- O diretório 'dotfiles-tools' deve ser um diretório em seu HOME (seu ambiente prod)"
+        echo "- O diretório 'dotfiles-tools-prod' não pode existir em seu HOME"
         return 10
     fi
 }
@@ -70,8 +69,8 @@ dot_dev_disable() {
         dot-reload
     else
         echo "Não é possível ativar o ambiente produção ou ele já está ativo"
-        echo "- dotfiles-tools deve ser um link em seu HOME (seu ambiente dev)"
-        echo "- dotfiles-tools-prod deve ser um diretório em seu HOME"
+        echo "- O diretório 'dotfiles-tools' deve ser um link em seu HOME apontando para o ambiente dev"
+        echo "- O diretório 'dotfiles-tools-prod' deve ser um diretório em seu HOME"
 
         return 10
     fi
